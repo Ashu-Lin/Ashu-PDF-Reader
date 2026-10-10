@@ -3,7 +3,7 @@
 [English](README.md) | [简体中文](README.zh-CN.md)
 
 
-A minimalist, keyboard-first PDF reader for Windows.  
+**A minimalist, keyboard-first, frameless PDF reader for Windows.**  
 Built with Tauri 2, Vue 3, TypeScript, Vite, and PDF.js.
 
 ![Distraction-free reading view](docs/github-preview.png)
@@ -45,10 +45,11 @@ To update, close the running app and install the newer package. You usually do n
 Most PDF viewers are full document platforms: tabs, sidebars, toolbars, account prompts, cloud features, update banners, and controls you rarely use. Ashu PDF Reader takes the opposite approach.
 
 - Local-first: no account, no upload, no telemetry workflow.
-- Minimal by default: after opening a PDF, only the document is visible.
 - Keyboard-first: core actions are available without hunting through menus.
 - Windows-first: built for a normal Windows desktop workflow.
-- Frameless but familiar: the window can be moved, resized, minimized, maximized, and closed with familiar interactions.
+- **Frameless by design:** no native title bar; a thin hover toolbar appears only when needed.
+- **Minimal by default:** after opening a PDF, the document is the interface.
+- Familiar window behavior: the frameless window can still be moved, resized, minimized, maximized, and closed.
 - Fast to understand: launch, pick a PDF, read. Cancel and the app exits.
 
 ## Features
@@ -181,6 +182,8 @@ minimal PDF reader, lightweight PDF viewer, Windows PDF reader, Tauri PDF reader
 ## License
 
 MIT
+
+
 
 
 

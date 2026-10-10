@@ -3,7 +3,7 @@
 [English](README.md) | [简体中文](README.zh-CN.md)
 
 
-一个 Windows 优先的极简 PDF 阅读器。  
+**一个 Windows 优先、极简、无边框的 PDF 阅读器。**  
 基于 Tauri 2、Vue 3、TypeScript、Vite 和 PDF.js。
 
 ![无干扰阅读界面](docs/github-preview.png)
@@ -46,7 +46,9 @@ Ashu PDF Reader 面向只想安静阅读本地 PDF 的用户。启动后直接�
 - 极简默认状态：打开 PDF 后只看到文档。
 - 键盘优先：核心操作都有快捷键。
 - Windows 优先：针对 Windows 桌面使用习惯设计。
-- 无边框窗口：保留移动、缩放、最小化、最大化、关闭等直觉。
+- **无边框设计：** 没有原生标题栏，只在需要时显示极细的悬停控制条。
+- **默认极简：** 打开 PDF 后，文档本身就是界面。
+- 保留普通窗口直觉：移动、缩放、最小化、最大化、关闭都可靠可用。
 - 启动即选择文件：取消选择则退出应用。
 - 适配宽度：默认让 PDF 贴合窗口内容区。
 - 无可见滚动条：仍支持鼠标滚轮和触控板滚动。
@@ -107,6 +109,8 @@ src-tauri/target/release/bundle/
 ## 许可证
 
 MIT
+
+
 
 
 

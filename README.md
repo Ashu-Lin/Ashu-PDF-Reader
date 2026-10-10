@@ -6,13 +6,17 @@
 **A minimalist, keyboard-first, frameless PDF reader for Windows.**  
 Built with Tauri 2, Vue 3, TypeScript, Vite, and PDF.js.
 
-![Distraction-free reading view](docs/github-preview.png)
+![Reading view with hover controls](docs/github-preview.png)
 
-*Distraction-free reading view*
+*Reading view with hover controls*
+
+![Clean reading view](docs/github-reading-clean.png)
+
+*Clean reading view*
 
 ![Keyboard-first command palette](docs/github-command-palette.png)
 
-*Keyboard-first command palette (F1 / Ctrl+Shift+P)*
+*Keyboard-first command palette (`F1` / `Ctrl+Shift+P`)*
 
 If this project fits the way you read, consider giving it a star to help more people find it.
 
@@ -182,6 +186,7 @@ minimal PDF reader, lightweight PDF viewer, Windows PDF reader, Tauri PDF reader
 ## License
 
 MIT
+
 
 
 

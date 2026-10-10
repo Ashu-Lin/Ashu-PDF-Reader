@@ -6,13 +6,17 @@
 **一个 Windows 优先、极简、无边框的 PDF 阅读器。**  
 基于 Tauri 2、Vue 3、TypeScript、Vite 和 PDF.js。
 
-![无干扰阅读界面](docs/github-preview.png)
+![带悬停控制条的阅读界面](docs/github-preview.png)
 
-*无干扰阅读界面*
+*带悬停控制条的阅读界面*
+
+![干净阅读界面](docs/github-reading-clean.png)
+
+*干净阅读界面*
 
 ![键盘优先命令面板](docs/github-command-palette.png)
 
-*键盘优先命令面板（F1 / Ctrl+Shift+P）*
+*键盘优先命令面板（`F1` / `Ctrl+Shift+P`）*
 
 如果这个项目符合你的阅读方式，欢迎点一个 Star，让更多人发现它。
 
@@ -109,6 +113,7 @@ src-tauri/target/release/bundle/
 ## 许可证
 
 MIT
+
 
 
 

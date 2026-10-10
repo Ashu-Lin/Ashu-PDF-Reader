@@ -1,0 +1,3 @@
+interface:
+  display_name: "Ashu GitHub Release"
+  short_description: "Release and publish Ashu PDF Reader to GitHub with verified installers and docs"

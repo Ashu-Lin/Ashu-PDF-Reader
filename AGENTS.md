@@ -39,3 +39,12 @@ pnpm tauri build
 - Windows 窗口拖动、缩放、关闭必须可靠。
 - PDF 默认适配窗口宽度。
 - 不引入多余菜单和常驻工具栏。
+
+## GitHub 提交流程
+
+- 通用 Git 与版本规范使用 `git-workflow-and-versioning`。
+- 提交信息与暂存使用 `git-commit`。
+- 本项目发布流程使用 `ashu-github-release`。
+- GitHub-bound 改动必须完成验证、更新文档、提交、推送、Tag 和 Release 资产校验。
+
+

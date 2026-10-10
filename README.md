@@ -183,9 +183,15 @@ src-tauri/target/release/bundle/
 
 minimal PDF reader, lightweight PDF viewer, Windows PDF reader, Tauri PDF reader, Tauri 2 app, Vue 3 PDF viewer, TypeScript PDF reader, PDF.js desktop app, keyboard-first PDF reader, distraction-free PDF reader, open source PDF viewer, frameless PDF reader, local-first PDF reader.
 
+## Project Skills
+
+The repository includes `skills/ashu-github-release`, a project-specific release workflow for version synchronization, validation, bilingual documentation, Conventional Commits, tags, GitHub Releases, installer uploads, and remote verification.
+
+It works alongside the installed general-purpose skills `git-workflow-and-versioning` and `git-commit`.
 ## License
 
 MIT
+
 
 
 

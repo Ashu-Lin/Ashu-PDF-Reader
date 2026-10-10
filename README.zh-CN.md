@@ -110,9 +110,15 @@ pnpm tauri build
 src-tauri/target/release/bundle/
 ```
 
+## 项目 Skill
+
+仓库包含 `skills/ashu-github-release`，用于本项目的版本同步、构建验证、中英文文档、Conventional Commits、Tag、GitHub Release、安装包上传和远程校验。
+
+它与通用 Skill `git-workflow-and-versioning`、`git-commit` 配合使用。
 ## 许可证
 
 MIT
+
 
 
 

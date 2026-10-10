@@ -2,9 +2,6 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-[![Release](https://img.shields.io/github/v/release/Ashu-Lin/Ashu-PDF-Reader?sort=semver&label=release)](https://github.com/Ashu-Lin/Ashu-PDF-Reader/releases)
-[![License](https://img.shields.io/github/license/Ashu-Lin/Ashu-PDF-Reader)](LICENSE)
-[![Platform](https://img.shields.io/badge/platform-Windows-0078D4)](https://github.com/Ashu-Lin/Ashu-PDF-Reader/releases)
 
 一个 Windows 优先的极简 PDF 阅读器。  
 基于 Tauri 2、Vue 3、TypeScript、Vite 和 PDF.js。

@@ -5,6 +5,7 @@
 [![Release](https://img.shields.io/github/v/release/Ashu-Lin/Ashu-PDF-Reader?sort=semver&label=release)](https://github.com/Ashu-Lin/Ashu-PDF-Reader/releases)
 [![License](https://img.shields.io/github/license/Ashu-Lin/Ashu-PDF-Reader)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Windows-0078D4)](https://github.com/Ashu-Lin/Ashu-PDF-Reader/releases)
+
 一个 Windows 优先的极简 PDF 阅读器。  
 基于 Tauri 2、Vue 3、TypeScript、Vite 和 PDF.js。
 
@@ -19,6 +20,28 @@
 如果这个项目符合你的阅读方式，欢迎点一个 Star，让更多人发现它。
 
 Ashu PDF Reader 面向只想安静阅读本地 PDF 的用户。启动后直接选择文件，取消则退出；选中 PDF 后，窗口只展示文档。没有常驻工具栏，没有复杂菜单，所有功能都通过快捷键或顶部悬停控制条唤起。
+
+## 下载与安装
+
+不需要自己编译源码，直接下载 Windows 安装包即可使用。
+
+| 安装包 | 建议 | 下载 |
+| --- | --- | --- |
+| Windows 安装器（`.exe`） | 推荐 | [下载 v0.1.3](https://github.com/Ashu-Lin/Ashu-PDF-Reader/releases/download/v0.1.3/Ashu.PDF.Reader_0.1.3_x64-setup.exe) |
+| Windows MSI（`.msi`） | 备用 | [下载 v0.1.3](https://github.com/Ashu-Lin/Ashu-PDF-Reader/releases/download/v0.1.3/Ashu.PDF.Reader_0.1.3_x64_en-US.msi) |
+
+[查看全部 Release](https://github.com/Ashu-Lin/Ashu-PDF-Reader/releases)
+
+### Windows 安装步骤
+
+1. 下载 `.exe` 安装器，优先推荐它。
+2. 关闭正在运行的旧版 Ashu PDF Reader。
+3. 运行安装器，按提示完成安装。
+4. 如果出现 Windows SmartScreen，选择 **更多信息** -> **仍要运行**。当前版本暂未购买代码签名证书。
+5. 从开始菜单或桌面快捷方式启动 **Ashu PDF Reader**。
+6. 选择一个 PDF。如果取消选择，应用会直接退出。
+
+更新时关闭正在运行的应用，然后安装新版本即可，通常不需要先卸载旧版。
 
 ## 特点
 
@@ -87,6 +110,10 @@ src-tauri/target/release/bundle/
 ## 许可证
 
 MIT
+
+
+
+
 
 
 

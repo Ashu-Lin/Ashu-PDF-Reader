@@ -5,6 +5,7 @@
 [![Release](https://img.shields.io/github/v/release/Ashu-Lin/Ashu-PDF-Reader?sort=semver&label=release)](https://github.com/Ashu-Lin/Ashu-PDF-Reader/releases)
 [![License](https://img.shields.io/github/license/Ashu-Lin/Ashu-PDF-Reader)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Windows-0078D4)](https://github.com/Ashu-Lin/Ashu-PDF-Reader/releases)
+
 A minimalist, keyboard-first PDF reader for Windows.  
 Built with Tauri 2, Vue 3, TypeScript, Vite, and PDF.js.
 
@@ -19,6 +20,28 @@ Built with Tauri 2, Vue 3, TypeScript, Vite, and PDF.js.
 If this project fits the way you read, consider giving it a star to help more people find it.
 
 Ashu PDF Reader is designed for people who want to read local PDF files without a crowded toolbar, a browser tab, or a heavy document suite. Launch it, choose a PDF, and the window becomes a quiet reader. Everything else stays out of the way until you ask for it.
+
+## Download and Install
+
+You do not need to build from source to use Ashu PDF Reader.
+
+| Package | Recommendation | Download |
+| --- | --- | --- |
+| Windows installer (`.exe`) | Recommended | [Download v0.1.3](https://github.com/Ashu-Lin/Ashu-PDF-Reader/releases/download/v0.1.3/Ashu.PDF.Reader_0.1.3_x64-setup.exe) |
+| Windows MSI (`.msi`) | Alternate | [Download v0.1.3](https://github.com/Ashu-Lin/Ashu-PDF-Reader/releases/download/v0.1.3/Ashu.PDF.Reader_0.1.3_x64_en-US.msi) |
+
+[Browse all releases](https://github.com/Ashu-Lin/Ashu-PDF-Reader/releases)
+
+### Install on Windows
+
+1. Download the `.exe` installer. It is recommended over the MSI.
+2. Close any older Ashu PDF Reader window.
+3. Run the installer and follow the prompts.
+4. If Windows SmartScreen appears, choose **More info** -> **Run anyway**. The current release is not code-signed yet.
+5. Launch **Ashu PDF Reader** from the Start menu or desktop shortcut.
+6. Choose a PDF. If you cancel file selection, the app exits.
+
+To update, close the running app and install the newer package. You usually do not need to uninstall the old version first.
 
 ## Why Ashu PDF Reader?
 
@@ -161,6 +184,10 @@ minimal PDF reader, lightweight PDF viewer, Windows PDF reader, Tauri PDF reader
 ## License
 
 MIT
+
+
+
+
 
 
 

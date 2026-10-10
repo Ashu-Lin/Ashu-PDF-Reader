@@ -8,7 +8,13 @@
 A minimalist, keyboard-first PDF reader for Windows.  
 Built with Tauri 2, Vue 3, TypeScript, Vite, and PDF.js.
 
-![Ashu PDF Reader screenshot](docs/github-preview.png)
+![Distraction-free reading view](docs/github-preview.png)
+
+*Distraction-free reading view*
+
+![Keyboard-first command palette](docs/github-command-palette.png)
+
+*Keyboard-first command palette (F1 / Ctrl+Shift+P)*
 
 If this project fits the way you read, consider giving it a star to help more people find it.
 
@@ -155,6 +161,7 @@ minimal PDF reader, lightweight PDF viewer, Windows PDF reader, Tauri PDF reader
 ## License
 
 MIT
+
 
 
 

@@ -8,7 +8,13 @@
 一个 Windows 优先的极简 PDF 阅读器。  
 基于 Tauri 2、Vue 3、TypeScript、Vite 和 PDF.js。
 
-![Ashu PDF Reader 截图](docs/github-preview.png)
+![无干扰阅读界面](docs/github-preview.png)
+
+*无干扰阅读界面*
+
+![键盘优先命令面板](docs/github-command-palette.png)
+
+*键盘优先命令面板（F1 / Ctrl+Shift+P）*
 
 如果这个项目符合你的阅读方式，欢迎点一个 Star，让更多人发现它。
 
@@ -81,6 +87,7 @@ src-tauri/target/release/bundle/
 ## 许可证
 
 MIT
+
 
 
 

@@ -2,10 +2,15 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
+[![Release](https://img.shields.io/github/v/release/Ashu-Lin/Ashu-PDF-Reader?sort=semver&label=release)](https://github.com/Ashu-Lin/Ashu-PDF-Reader/releases)
+[![License](https://img.shields.io/github/license/Ashu-Lin/Ashu-PDF-Reader)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-Windows-0078D4)](https://github.com/Ashu-Lin/Ashu-PDF-Reader/releases)
 A minimalist, keyboard-first PDF reader for Windows.  
 Built with Tauri 2, Vue 3, TypeScript, Vite, and PDF.js.
 
 ![Ashu PDF Reader screenshot](docs/github-preview.png)
+
+If this project fits the way you read, consider giving it a star to help more people find it.
 
 Ashu PDF Reader is designed for people who want to read local PDF files without a crowded toolbar, a browser tab, or a heavy document suite. Launch it, choose a PDF, and the window becomes a quiet reader. Everything else stays out of the way until you ask for it.
 
@@ -150,6 +155,8 @@ minimal PDF reader, lightweight PDF viewer, Windows PDF reader, Tauri PDF reader
 ## License
 
 MIT
+
+
 
 
 

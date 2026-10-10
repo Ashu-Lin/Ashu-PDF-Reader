@@ -118,17 +118,3 @@ src-tauri/target/release/bundle/
 ## 许可证
 
 MIT
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -191,17 +191,3 @@ It works alongside the installed general-purpose skills `git-workflow-and-versio
 ## License
 
 MIT
-
-
-
-
-
-
-
-
-
-
-
-
-
-

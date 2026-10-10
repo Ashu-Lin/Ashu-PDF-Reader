@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ashu PDF Reader - UI Prototype</title>
+  <style>
+    :root {
+      --page: #ece8df;
+      --ink: #20231f;
+      --muted: #6d746e;
+      --line: #d7d1c5;
+      --desk: #101412;
+      --panel: #171c19;
+      --panel-line: rgba(255, 255, 255, 0.13);
+      --paper: #fbfaf6;
+      --paper-edge: #e7e2d8;
+      --paper-ink: #20231f;
+      --accent: #e3c46a;
+      --ui-font: "Segoe UI Variable", "Segoe UI", sans-serif;
+      --reader-font: "Source Han Serif SC", "Songti SC", Georgia, serif;
+      --mono-font: "Cascadia Mono", Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #f1eee7 0%, var(--page) 34%, #e8e4db 100%);
+      color: var(--ink);
+      font-family: var(--ui-font);
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    button, input { font: inherit; }
+    .shell { width: min(1360px, calc(100% - 40px)); margin: 0 auto; padding: 48px 0 96px; }
+    .page-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px;
+      align-items: end;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--line);
+    }
+    .product-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+      letter-spacing: 0.04em;
+    }
+    .mark-glyph { width: 18px; height: 22px; border: 1.5px solid currentColor; border-radius: 2px; position: relative; }
+    .mark-glyph::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      top: 6px;
+      height: 1px;
+      background: currentColor;
+      box-shadow: 0 4px 0 currentColor, 0 8px 0 currentColor;
+      opacity: 0.75;
+    }
+    h1, h2, h3, h4, p { margin: 0; }
+    h1 {
+      max-width: 780px;
+      font-family: var(--reader-font);
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: 0.98;
+      font-weight: 650;
+      letter-spacing: -0.035em;
+    }
+    .lead { max-width: 720px; margin-top: 22px; color: #4c544e; font-size: 16px; }
+    .side-note { border-left: 1px solid var(--line); padding-left: 22px; color: var(--muted); font-size: 13px; }
+    .side-note strong { display: block; margin-bottom: 8px; color: var(--ink); font-size: 14px; }
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin: 24px 0 32px;
+      padding: 10px 0;
+      background: rgba(236, 232, 223, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(215, 209, 197, 0.72);
+    }
+    .nav a {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 8px 11px;
+      color: #485049;
+      font-size: 13px;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.44);
+    }
+    .nav a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .artboard { margin-top: 44px; }
+    .artboard-head { display: grid; grid-template-columns: 40px minmax(0, 1fr) minmax(220px, 360px); gap: 18px; align-items: start; margin-bottom: 14px; }
+    .artboard-index { color: var(--muted); font-family: var(--mono-font); font-size: 12px; padding-top: 6px; }
+    .artboard h2 { font-size: 22px; line-height: 1.18; font-weight: 680; letter-spacing: -0.02em; }
+    .artboard h2 span { display: block; margin-top: 4px; color: var(--muted); font-size: 13px; font-weight: 450; letter-spacing: 0; }
+    .artboard-note { color: var(--muted); font-size: 13px; text-align: right; }
+    .screen {
+      position: relative;
+      width: 100%;
+      min-height: 650px;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      border: 1px solid #beb8ac;
+      border-radius: 16px;
+      background: var(--desk);
+      box-shadow: 0 22px 55px rgba(43, 39, 31, 0.12);
+      isolation: isolate;
+    }
+    .screen::after { content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04); }
+    .screen-label {
+      position: absolute;
+      z-index: 7;
+      top: 22px;
+      left: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 9px;
+      border: 1px solid var(--panel-line);
+      border-radius: 5px;
+      color: rgba(255,255,255,0.7);
+      background: rgba(9, 12, 11, 0.72);
+      font-size: 12px;
+    }
+    .screen-label::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+    .win-dialog {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      width: min(720px, 70%);
+      transform: translate(-50%, -50%);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #f7f7f5;
+      color: #202124;
+      box-shadow: 0 28px 70px rgba(0,0,0,0.38);
+    }
+    .win-titlebar { display: flex; align-items: center; justify-content: space-between; min-height: 48px; padding: 8px 14px; background: #ffffff; border-bottom: 1px solid #e2e2df; font-size: 13px; font-weight: 650; }
+    .window-buttons { display: flex; gap: 18px; color: #5f6368; font-family: var(--mono-font); font-size: 12px; }
+    .dialog-path { padding: 12px 16px 8px; color: #5f6368; font-size: 12px; }
+    .dialog-toolbar { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-bottom: 1px solid #e4e4e1; }
+    .ghost-button, .primary-button { border-radius: 4px; padding: 6px 10px; font-size: 12px; }
+    .ghost-button { border: 1px solid #d5d7d4; color: #3f4245; background: #ffffff; }
+    .primary-button { border: 1px solid #0b57d0; color: #ffffff; background: #0b57d0; font-weight: 650; }
+    .file-table { min-height: 250px; padding: 8px 10px 14px; background: #ffffff; }
+    .file-row { display: grid; grid-template-columns: 36px minmax(0, 1fr) 130px 110px; align-items: center; min-height: 44px; padding: 8px; border-radius: 4px; color: #3c4043; font-size: 13px; }
+    .file-row.selected { background: #e8f0fe; color: #174ea6; }
+    .file-icon { width: 18px; height: 22px; border: 1px solid currentColor; border-radius: 2px; position: relative; opacity: 0.82; }
+    .file-icon::before { content: ""; position: absolute; top: 4px; left: 4px; right: 4px; height: 1px; background: currentColor; box-shadow: 0 4px 0 currentColor, 0 8px 0 currentColor; }
+    .dialog-footer { display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 12px 16px; background: #f7f7f5; border-top: 1px solid #e3e3df; }
+    .reader-surface { position: absolute; inset: 0; display: grid; place-items: center; padding: 42px 56px; background: linear-gradient(180deg, #151a18 0%, var(--desk) 100%); }
+    .reader-surface.no-pad { padding: 34px 74px; }
+    .pdf-page { width: min(720px, 66%); height: 88%; padding: clamp(34px, 5vw, 58px); overflow: hidden; border: 1px solid var(--paper-edge); background: var(--paper); color: var(--paper-ink); box-shadow: 0 18px 42px rgba(0,0,0,0.24); font-family: var(--reader-font); }
+    .pdf-page.wide { width: min(900px, 78%); }
+    .pdf-kicker { color: #5f675f; font-family: var(--ui-font); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; }
+    .pdf-page h3 { margin-top: 18px; font-size: clamp(24px, 3vw, 38px); line-height: 1.08; letter-spacing: -0.03em; font-weight: 650; }
+    .pdf-page h4 { margin: 28px 0 8px; font-size: 16px; font-weight: 700; }
+    .pdf-page p { margin-top: 12px; max-width: 68ch; color: #343a35; font-size: clamp(12px, 1.12vw, 14px); line-height: 1.75; text-align: justify; }
+    .pdf-rule { width: 54px; height: 2px; margin: 24px 0 0; background: var(--accent); }
+    .hot-zone { position: absolute; top: 0; left: 0; right: 0; height: 34px; z-index: 2; background: rgba(227, 196, 106, 0.08); border-bottom: 1px dashed rgba(227, 196, 106, 0.55); }
+    .hot-zone span { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); color: rgba(227, 196, 106, 0.92); font-size: 12px; }
+    .hoverbar { position: absolute; z-index: 4; top: 0; left: 0; right: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; height: 48px; padding: 0 12px; color: rgba(255,255,255,0.82); background: rgba(15, 19, 17, 0.78); border-bottom: 1px solid var(--panel-line); backdrop-filter: blur(16px); }
+    .drag-region { display: flex; align-items: center; min-width: 0; gap: 10px; font-size: 12px; color: rgba(255,255,255,0.68); }
+    .drag-grip { color: rgba(255,255,255,0.34); letter-spacing: 2px; transform: rotate(90deg); }
+    .bar-center { display: flex; align-items: center; gap: 8px; padding: 5px; border: 1px solid rgba(255,255,255,0.1); border-radius: 7px; background: rgba(255,255,255,0.045); }
+    .bar-button { min-width: 32px; height: 30px; padding: 0 9px; border: 0; border-radius: 5px; color: inherit; background: transparent; font-size: 12px; }
+    .bar-button.active { color: #161a17; background: var(--accent); }
+    .window-actions { display: flex; justify-content: flex-end; gap: 4px; }
+    .action-dot { width: 12px; height: 12px; border: 1px solid rgba(255,255,255,0.44); border-radius: 50%; }
+    .overlay-scrim { position: absolute; inset: 0; z-index: 3; background: rgba(8, 10, 9, 0.52); }
+    .command-panel { position: absolute; z-index: 4; top: 15%; left: 50%; width: min(620px, 66%); transform: translateX(-50%); border: 1px solid rgba(255,255,255,0.16); border-radius: 10px; overflow: hidden; background: #171c19; color: #f4f2eb; box-shadow: 0 26px 70px rgba(0,0,0,0.44); }
+    .command-input { display: flex; align-items: center; gap: 12px; height: 54px; padding: 0 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .command-input span { color: rgba(255,255,255,0.42); font-family: var(--mono-font); font-size: 12px; }
+    .command-input input { width: 100%; border: 0; outline: 0; color: #f4f2eb; background: transparent; font-size: 15px; }
+    .command-list { padding: 8px; }
+    .command-item { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 10px; align-items: center; min-height: 48px; padding: 8px 10px; border-radius: 6px; color: rgba(255,255,255,0.76); font-size: 13px; }
+    .command-item.active { color: #161a17; background: var(--accent); }
+    .command-item svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.7; }
+    kbd { display: inline-flex; align-items: center; height: 24px; padding: 0 7px; border: 1px solid rgba(255,255,255,0.14); border-radius: 4px; color: inherit; background: rgba(255,255,255,0.07); font-family: var(--mono-font); font-size: 12px; line-height: 1; }
+    .command-item.active kbd { border-color: rgba(0,0,0,0.18); background: rgba(0,0,0,0.08); }
+    .gesture-layer { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+    .move-ghost { position: absolute; top: 50%; left: 50%; display: grid; place-items: center; width: 144px; height: 104px; transform: translate(-50%, -50%); border: 1px dashed rgba(227, 196, 106, 0.9); border-radius: 10px; color: var(--accent); background: rgba(227, 196, 106, 0.08); font-size: 12px; text-align: center; }
+    .move-ghost strong { display: block; margin-bottom: 4px; font-size: 14px; }
+    .resize-corners span, .resize-edges span { position: absolute; background: var(--accent); opacity: 0.72; }
+    .resize-corners span { width: 10px; height: 10px; border: 1px solid #151a18; }
+    .resize-edges span { border-radius: 999px; }
+    .corner-tl { top: 10px; left: 10px; } .corner-tr { top: 10px; right: 10px; } .corner-bl { bottom: 10px; left: 10px; } .corner-br { bottom: 10px; right: 10px; }
+    .edge-n { top: 0; left: 36%; right: 36%; height: 2px; } .edge-s { bottom: 0; left: 36%; right: 36%; height: 2px; } .edge-w { left: 0; top: 36%; bottom: 36%; width: 2px; } .edge-e { right: 0; top: 36%; bottom: 36%; width: 2px; }
+    .annotation { position: absolute; z-index: 6; max-width: 210px; padding: 9px 11px; border: 1px solid rgba(227, 196, 106, 0.5); border-radius: 6px; color: rgba(255,255,255,0.84); background: rgba(9, 12, 11, 0.82); font-size: 12px; }
+    .annotation strong { display: block; margin-bottom: 3px; color: var(--accent); font-size: 12px; }
+    .annotation.top-right { top: 62px; right: 22px; }
+    .annotation.bottom-left { bottom: 22px; left: 22px; }
+    .state-note { position: absolute; z-index: 6; right: 24px; bottom: 22px; color: rgba(255,255,255,0.66); font-size: 12px; }
+    @media (max-width: 900px) {
+      .shell { width: min(100% - 24px, 1360px); padding-top: 28px; }
+      .page-head { grid-template-columns: 1fr; }
+      .side-note { border-left: 0; padding-left: 0; }
+      .artboard-head { grid-template-columns: 30px 1fr; }
+      .artboard-note { grid-column: 2; text-align: left; margin-top: 4px; }
+      .screen { min-height: 520px; }
+      .pdf-page { width: 76%; padding: 28px; }
+      .hoverbar { grid-template-columns: minmax(0, 1fr) auto; }
+      .window-actions { display: none; }
+    }
+    @media print { body { background: #ffffff; } .shell { width: 100%; padding: 0; } .nav { display: none; } .screen { break-inside: avoid; box-shadow: none; } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="page-head">
+      <div>
+        <div class="product-mark"><span class="mark-glyph"></span> Ashu PDF Reader / UI Prototype 01</div>
+        <h1>只留下文档，<br>其他都退后。</h1>
+        <p class="lead">Windows 优先的单窗口 PDF 阅读器。启动时选择文件，取消即退出；进入阅读后，窗口只显示 PDF，功能通过快捷键和顶部悬停控制条唤起。</p>
+      </div>
+      <aside class="side-note">
+        <strong>Design thesis</strong>
+        静默书桌：深色桌面、暖白纸张、一个低饱和标记黄。无边框窗口通过顶部悬停条、Alt 拖动和边缘缩放保持普通窗口直觉。
+      </aside>
+    </header>
+    <nav class="nav" aria-label="原型画面">
+      <a href="#launch">01 启动选择</a>
+      <a href="#reader">02 纯阅读</a>
+      <a href="#hover">03 悬停控制</a>
+      <a href="#command">04 命令面板</a>
+      <a href="#gesture">05 窗口手势</a>
+    </nav>
+    <section class="artboard" id="launch">
+      <div class="artboard-head">
+        <div class="artboard-index">01</div>
+        <h2>启动选择文件<span>使用 Windows 原生文件选择器，不先画应用主界面。</span></h2>
+        <p class="artboard-note">取消选择后退出应用。选择 PDF 后进入阅读模式。</p>
+      </div>
+      <div class="screen">
+        <div class="screen-label">系统文件选择器</div>
+        <div class="win-dialog" role="img" aria-label="模拟 Windows PDF 文件选择器">
+          <div class="win-titlebar"><span>打开 PDF</span><span class="window-buttons"><span>—</span><span>□</span><span>×</span></span></div>
+          <div class="dialog-path">此电脑 &gt; 下载</div>
+          <div class="dialog-toolbar"><button class="ghost-button" type="button">新建文件夹</button><button class="ghost-button" type="button">排列</button><button class="ghost-button" type="button">查看</button></div>
+          <div class="file-table">
+            <div class="file-row"><span class="file-icon"></span><span>阅读笔记</span><span>文件夹</span><span>2026/10/10</span></div>
+            <div class="file-row selected"><span class="file-icon"></span><span>安静软件的界面原则.pdf</span><span>PDF 文档</span><span>8.4 MB</span></div>
+            <div class="file-row"><span class="file-icon"></span><span>Quiet Software.pdf</span><span>PDF 文档</span><span>3.1 MB</span></div>
+            <div class="file-row"><span class="file-icon"></span><span>设计参考.pdf</span><span>PDF 文档</span><span>12.7 MB</span></div>
+          </div>
+          <div class="dialog-footer"><button class="ghost-button" type="button">取消</button><button class="primary-button" type="button">打开</button></div>
+        </div>
+        <p class="state-note">原生对话框由系统绘制，视觉仅作流程示意</p>
+      </div>
+    </section>
+    <section class="artboard" id="reader">
+      <div class="artboard-head">
+        <div class="artboard-index">02</div>
+        <h2>纯阅读界面<span>默认没有任何菜单。PDF 以暖白纸面出现在深色桌面上。</span></h2>
+        <p class="artboard-note">适配窗口宽度。窗口变化时保持页面居中和可读行宽。</p>
+      </div>
+      <div class="screen">
+        <div class="screen-label">阅读状态</div>
+        <div class="reader-surface">
+          <article class="pdf-page wide">
+            <div class="pdf-kicker">QUIET SOFTWARE / READING NOTE</div>
+            <h3>安静软件的界面原则</h3>
+            <div class="pdf-rule"></div>
+            <h4>一、界面不是内容</h4>
+            <p>阅读工具的第一职责是让内容稳定地出现在视线里。按钮、工具栏和状态信息只有在用户主动寻找它们时才应该出现。默认状态下，应用不应该争夺注意力。</p>
+            <h4>二、让切换足够明确</h4>
+            <p>启动选择文件，选择后进入阅读，取消则退出。这个流程没有中间页面，也没有需要学习的入口。用户只需要做一个决定，然后开始阅读。</p>
+            <h4>三、窗口仍然像窗口</h4>
+            <p>无边框不等于无法移动。窗口顶部保留悬停拖动区，任意位置支持 Alt 拖动，四边和四角支持缩放。熟悉的窗口行为被保留，但视觉噪音被撤掉。</p>
+          </article>
+        </div>
+        <p class="state-note">默认状态：只有 PDF</p>
+      </div>
+    </section>
+    <section class="artboard" id="hover">
+      <div class="artboard-head">
+        <div class="artboard-index">03</div>
+        <h2>顶部悬停控制条<span>鼠标靠近顶部时出现，离开后自动隐藏。</span></h2>
+        <p class="artboard-note">用于拖动、打开文件、缩放、适配宽度和窗口按钮。</p>
+      </div>
+      <div class="screen">
+        <div class="screen-label">悬停控制</div>
+        <div class="reader-surface no-pad">
+          <article class="pdf-page">
+            <div class="pdf-kicker">QUIET SOFTWARE / READING NOTE</div>
+            <h3>安静软件的界面原则</h3>
+            <div class="pdf-rule"></div>
+            <p>一个阅读器不需要在每一秒证明自己存在。好的状态是：你忘记界面，只记得刚刚读过的句子。</p>
+            <p>顶部控制条是窗口的唯一可见外壳。它足够薄，足够暗，并且在不需要时从画面中消失。</p>
+          </article>
+        </div>
+        <div class="hot-zone"><span>顶部 34px 触发区</span></div>
+        <div class="hoverbar">
+          <div class="drag-region"><span class="drag-grip">⋮⋮</span><span>安静软件的界面原则.pdf</span></div>
+          <div class="bar-center">
+            <button class="bar-button" type="button">打开</button>
+            <button class="bar-button" type="button">−</button>
+            <button class="bar-button active" type="button">适配宽度</button>
+            <button class="bar-button" type="button">＋</button>
+          </div>
+          <div class="window-actions"><span class="action-dot"></span><span class="action-dot"></span><span class="action-dot"></span></div>
+        </div>
+        <div class="annotation bottom-left"><strong>拖动区</strong>顶部 48px 中可以拖动窗口，双击最大化或还原。</div>
+        <p class="state-note">鼠标离开顶部后，控制条自动淡出</p>
+      </div>
+    </section>
+    <section class="artboard" id="command">
+      <div class="artboard-head">
+        <div class="artboard-index">04</div>
+        <h2>命令面板与快捷键<span>所有非核心功能都收进 F1 / Ctrl+Shift+P。</span></h2>
+        <p class="artboard-note">第一版可先显示打开、缩放、适配宽度；搜索和目录作为预留入口。</p>
+      </div>
+      <div class="screen">
+        <div class="screen-label">命令面板</div>
+        <div class="reader-surface no-pad">
+          <article class="pdf-page wide">
+            <div class="pdf-kicker">QUIET SOFTWARE / READING NOTE</div>
+            <h3>安静软件的界面原则</h3>
+            <div class="pdf-rule"></div>
+            <p>当功能数量增长，命令面板比工具栏更适合极简阅读器。它不占常驻空间，并且天然支持键盘操作。</p>
+          </article>
+        </div>
+        <div class="overlay-scrim"></div>
+        <div class="command-panel">
+          <div class="command-input"><span>⌘</span><input aria-label="搜索命令" placeholder="搜索命令或输入快捷键" value="适配"></div>
+          <div class="command-list">
+            <div class="command-item active"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>适配窗口宽度</span><kbd>Ctrl 0</kbd></div>
+            <div class="command-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>放大页面</span><kbd>Ctrl +</kbd></div>
+            <div class="command-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg><span>缩小页面</span><kbd>Ctrl -</kbd></div>
+            <div class="command-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM8 5v14"/></svg><span>打开另一个 PDF</span><kbd>Ctrl O</kbd></div>
+          </div>
+        </div>
+        <p class="state-note">Esc 关闭。输入框始终获得焦点。</p>
+      </div>
+    </section>
+    <section class="artboard" id="gesture">
+      <div class="artboard-head">
+        <div class="artboard-index">05</div>
+        <h2>窗口手势提示<span>无边框窗口仍保留移动和缩放的直觉。</span></h2>
+        <p class="artboard-note">Alt + 任意位置拖动；边缘与角落拖动缩放；顶部悬停区也能拖动。</p>
+      </div>
+      <div class="screen">
+        <div class="screen-label">移动与缩放</div>
+        <div class="reader-surface no-pad">
+          <article class="pdf-page wide">
+            <div class="pdf-kicker">WINDOW MODEL</div>
+            <h3>看不见的窗口边界</h3>
+            <div class="pdf-rule"></div>
+            <p>没有标题栏时，窗口边界依然存在。用户体验上需要保留三个动作：移动、缩放、关闭。视觉上只需要在操作发生的那一刻提示边界。</p>
+          </article>
+        </div>
+        <div class="gesture-layer">
+          <div class="resize-edges"><span class="edge-n"></span><span class="edge-s"></span><span class="edge-w"></span><span class="edge-e"></span></div>
+          <div class="resize-corners"><span class="corner-tl"></span><span class="corner-tr"></span><span class="corner-bl"></span><span class="corner-br"></span></div>
+          <div class="move-ghost"><span><strong>Alt + 拖动</strong>任意位置移动窗口</span></div>
+          <div class="annotation top-right"><strong>边缘缩放</strong>鼠标进入边缘 6px 热区时出现缩放光标。</div>
+          <div class="annotation bottom-left"><strong>顶部拖动区</strong>鼠标靠近顶部时，悬停控制条接管移动和窗口按钮。</div>
+        </div>
+        <p class="state-note">提示仅作设计说明，正式应用默认不显示这些虚线</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+
+
